@@ -3,8 +3,109 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{732FD3D0-17AB-4DD5-A6C2-3AF028A4AA2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DFC3C380-D7B8-4DD3-9E56-868067DBB0A3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{DDA81B6C-CB97-4AD3-93E1-3AA84263261E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "frontend", "frontend", "{CF7BE52F-5102-491D-A5D9-18918E26076D}"
+	ProjectSection(SolutionItems) = preProject
+		..\src\wobble\frontend\CMakeLists.txt = ..\src\wobble\frontend\CMakeLists.txt
+		..\src\wobble\frontend\frontend.cpp = ..\src\wobble\frontend\frontend.cpp
+		..\src\wobble\frontend\frontend.h = ..\src\wobble\frontend\frontend.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{39AF84CF-20CE-48DD-A25A-024875DC4D0C}"
+	ProjectSection(SolutionItems) = preProject
+		..\src\wobble\core\CMakeLists.txt = ..\src\wobble\core\CMakeLists.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "foo", "foo", "{42BF51CF-7485-4E23-8AA8-2A19133FAB0E}"
+	ProjectSection(SolutionItems) = preProject
+		..\src\wobble\core\foo\CMakeLists.txt = ..\src\wobble\core\foo\CMakeLists.txt
+		..\src\wobble\core\foo\foo.cpp = ..\src\wobble\core\foo\foo.cpp
+		..\src\wobble\core\foo\foo.h = ..\src\wobble\core\foo\foo.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bar", "bar", "{8D7F70FB-EE38-43E6-8855-4D62C4427D18}"
+	ProjectSection(SolutionItems) = preProject
+		..\src\wobble\core\bar\bar.cpp = ..\src\wobble\core\bar\bar.cpp
+		..\src\wobble\core\bar\bar.h = ..\src\wobble\core\bar\bar.h
+		..\src\wobble\core\bar\CMakeLists.txt = ..\src\wobble\core\bar\CMakeLists.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "baz", "baz", "{F44306D8-0F93-4DEB-B7A1-657DDEAC9B93}"
+	ProjectSection(SolutionItems) = preProject
+		..\src\wobble\core\baz\baz.cpp = ..\src\wobble\core\baz\baz.cpp
+		..\src\wobble\core\baz\baz.h = ..\src\wobble\core\baz\baz.h
+		..\src\wobble\core\baz\CMakeLists.txt = ..\src\wobble\core\baz\CMakeLists.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "spam", "spam", "{90DE1938-E39C-4266-B2A0-9A776F323B7C}"
+	ProjectSection(SolutionItems) = preProject
+		..\src\wobble\core\bar\spam\CMakeLists.txt = ..\src\wobble\core\bar\spam\CMakeLists.txt
+		..\src\wobble\core\bar\spam\spam.cpp = ..\src\wobble\core\bar\spam\spam.cpp
+		..\src\wobble\core\bar\spam\spam.h = ..\src\wobble\core\bar\spam\spam.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ham", "ham", "{B2C31954-22CC-42BD-A393-E428F90DAD18}"
+	ProjectSection(SolutionItems) = preProject
+		..\src\wobble\core\bar\ham\CMakeLists.txt = ..\src\wobble\core\bar\ham\CMakeLists.txt
+		..\src\wobble\core\bar\ham\ham.cpp = ..\src\wobble\core\bar\ham\ham.cpp
+		..\src\wobble\core\bar\ham\ham.h = ..\src\wobble\core\bar\ham\ham.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "garp", "garp", "{67AC41E8-8B4A-4777-A93D-F77015802816}"
+	ProjectSection(SolutionItems) = preProject
+		..\src\wobble\frontend\garp\CMakeLists.txt = ..\src\wobble\frontend\garp\CMakeLists.txt
+		..\src\wobble\frontend\garp\garp.cpp = ..\src\wobble\frontend\garp\garp.cpp
+		..\src\wobble\frontend\garp\garp.h = ..\src\wobble\frontend\garp\garp.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "eggs", "eggs", "{49F75D54-9189-4484-BB77-617F4704EC1A}"
+	ProjectSection(SolutionItems) = preProject
+		..\src\wobble\core\bar\ham\eggs\CMakeLists.txt = ..\src\wobble\core\bar\ham\eggs\CMakeLists.txt
+		..\src\wobble\core\bar\ham\eggs\eggs.cpp = ..\src\wobble\core\bar\ham\eggs\eggs.cpp
+		..\src\wobble\core\bar\ham\eggs\eggs.h = ..\src\wobble\core\bar\ham\eggs\eggs.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "waldo", "waldo", "{184641F4-B02A-4E4E-88AF-84F6AC4539F2}"
+	ProjectSection(SolutionItems) = preProject
+		..\src\wobble\core\foo\waldo\CMakeLists.txt = ..\src\wobble\core\foo\waldo\CMakeLists.txt
+		..\src\wobble\core\foo\waldo\waldo.cpp = ..\src\wobble\core\foo\waldo\waldo.cpp
+		..\src\wobble\core\foo\waldo\waldo.h = ..\src\wobble\core\foo\waldo\waldo.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fred", "fred", "{0598C9D1-9871-4437-9F66-FEF025D38AC3}"
+	ProjectSection(SolutionItems) = preProject
+		..\src\wobble\frontend\fred\CMakeLists.txt = ..\src\wobble\frontend\fred\CMakeLists.txt
+		..\src\wobble\frontend\fred\fred.cpp = ..\src\wobble\frontend\fred\fred.cpp
+		..\src\wobble\frontend\fred\fred.h = ..\src\wobble\frontend\fred\fred.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "wobble", "wobble", "{DB3B36B0-F221-48B3-82CF-10E4FFF1DAFC}"
+	ProjectSection(SolutionItems) = preProject
+		..\src\wobble\CMakeLists.txt = ..\src\wobble\CMakeLists.txt
+		..\src\wobble.cpp = ..\src\wobble.cpp
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CF7BE52F-5102-491D-A5D9-18918E26076D} = {DB3B36B0-F221-48B3-82CF-10E4FFF1DAFC}
+		{39AF84CF-20CE-48DD-A25A-024875DC4D0C} = {DB3B36B0-F221-48B3-82CF-10E4FFF1DAFC}
+		{42BF51CF-7485-4E23-8AA8-2A19133FAB0E} = {39AF84CF-20CE-48DD-A25A-024875DC4D0C}
+		{8D7F70FB-EE38-43E6-8855-4D62C4427D18} = {39AF84CF-20CE-48DD-A25A-024875DC4D0C}
+		{F44306D8-0F93-4DEB-B7A1-657DDEAC9B93} = {39AF84CF-20CE-48DD-A25A-024875DC4D0C}
+		{90DE1938-E39C-4266-B2A0-9A776F323B7C} = {8D7F70FB-EE38-43E6-8855-4D62C4427D18}
+		{B2C31954-22CC-42BD-A393-E428F90DAD18} = {8D7F70FB-EE38-43E6-8855-4D62C4427D18}
+		{67AC41E8-8B4A-4777-A93D-F77015802816} = {CF7BE52F-5102-491D-A5D9-18918E26076D}
+		{49F75D54-9189-4484-BB77-617F4704EC1A} = {B2C31954-22CC-42BD-A393-E428F90DAD18}
+		{184641F4-B02A-4E4E-88AF-84F6AC4539F2} = {42BF51CF-7485-4E23-8AA8-2A19133FAB0E}
+		{0598C9D1-9871-4437-9F66-FEF025D38AC3} = {CF7BE52F-5102-491D-A5D9-18918E26076D}
+		{DB3B36B0-F221-48B3-82CF-10E4FFF1DAFC} = {DFC3C380-D7B8-4DD3-9E56-868067DBB0A3}
 	EndGlobalSection
 EndGlobal
