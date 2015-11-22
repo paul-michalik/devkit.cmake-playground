@@ -4,6 +4,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{732FD3D0-17AB-4DD5-A6C2-3AF028A4AA2F}"
+	ProjectSection(SolutionItems) = preProject
+		..\scripts\cmake_config.bat = ..\scripts\cmake_config.bat
+		..\scripts\cmake_package_generator.bat = ..\scripts\cmake_package_generator.bat
+		..\wobble.jom.win32.v130.debug.bat = ..\wobble.jom.win32.v130.debug.bat
+		..\wobble.jom.win64.v120.debug.bat = ..\wobble.jom.win64.v120.debug.bat
+		..\wobble.msbuild.win32.v120.debug.bat = ..\wobble.msbuild.win32.v120.debug.bat
+		..\wobble.msbuild.win64.v130.debug.bat = ..\wobble.msbuild.win64.v130.debug.bat
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DFC3C380-D7B8-4DD3-9E56-868067DBB0A3}"
 EndProject
