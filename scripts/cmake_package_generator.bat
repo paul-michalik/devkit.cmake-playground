@@ -1,6 +1,13 @@
 @echo off
 
+rem Parameters:
+rem %1: Package_Platform
+rem %2: Package_Toolset
+
 setlocal
+set "Package_Platform=%~1"
+set "Package_Toolset=%~2"
+
 set "Package_CMake_Generator="
 set "Package_VisualStudioDir="
 set "Package_VcVarsAll="

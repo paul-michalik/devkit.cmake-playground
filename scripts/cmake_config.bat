@@ -34,8 +34,8 @@ set "Package_CMake_Generator="
 set "Package_VisualStudioDir="
 set "Package_VcVarsAll="
 set "Package_VcVarsAllArgs="
-echo calling call "%Package_RootDir%\scripts\cmake_package_generator.bat"
-call "%Package_RootDir%\scripts\cmake_package_generator.bat"
+echo calling call "%Package_RootDir%\scripts\cmake_package_generator.bat" "%Package_Platform%" "%Package_Toolset%"
+call "%Package_RootDir%\scripts\cmake_package_generator.bat" "%Package_Platform%" "%Package_Toolset%"
  
 set "Package_SrcDir=%Package_RootDir%\src\%Package_Name%"
 
