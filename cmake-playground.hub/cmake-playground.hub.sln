@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{732F
 	ProjectSection(SolutionItems) = preProject
 		..\scripts\cmake_config.bat = ..\scripts\cmake_config.bat
 		..\scripts\cmake_package_generator.bat = ..\scripts\cmake_package_generator.bat
+		..\scripts\parse_params.bat = ..\scripts\parse_params.bat
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DFC3C380-D7B8-4DD3-9E56-868067DBB0A3}"
@@ -102,10 +103,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "git", "git", "{10EB2959-84A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".devkit", ".devkit", "{534C94F9-7343-419E-887E-86AC65661817}"
 	ProjectSection(SolutionItems) = preProject
-		..\wobble.jom.win32.v130.debug.bat = ..\wobble.jom.win32.v130.debug.bat
+		..\wobble.jom.win32.v140.debug.bat = ..\wobble.jom.win32.v140.debug.bat
 		..\wobble.jom.win64.v120.debug.bat = ..\wobble.jom.win64.v120.debug.bat
 		..\wobble.msbuild.win32.v120.debug.bat = ..\wobble.msbuild.win32.v120.debug.bat
-		..\wobble.msbuild.win64.v130.debug.bat = ..\wobble.msbuild.win64.v130.debug.bat
+		..\wobble.msbuild.win64.v110.debug.bat = ..\wobble.msbuild.win64.v110.debug.bat
+		..\wobble.msbuild.win64.v120.debug.bat = ..\wobble.msbuild.win64.v120.debug.bat
+		..\wobble.msbuild.win64.v140.debug.bat = ..\wobble.msbuild.win64.v140.debug.bat
 	EndProjectSection
 EndProject
 Global
