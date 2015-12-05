@@ -51,64 +51,78 @@ set Package_
 rem
 rem Should we invoke cmake-gui?
 rem
+set "Answer=No"
 call :invokeCMakeGuiIfRequired %*
+if /i "%Answer%"=="Yes" goto :eof
+if errorlevel 1 start "Error!" echo Error %errorlevel% occured in %0 
 
 rem
 rem Should we invoke cmake?
 rem
+set "Answer=No"
 call :invokeCMakeIfRequired %*
+if /i "%Answer%"=="Yes" goto :eof
+if errorlevel 1 start "Error!" echo Error %errorlevel% occured in %0 
 
 rem
 rem Should we invoke Visual Studio?
 rem
+set "Answer=No"
 call :invokeVisualStudioIfRequired %*
+if /i "%Answer%"=="Yes" goto :eof
+if errorlevel 1 start "Error!" echo Error %errorlevel% occured in %0 
 
+rem
+rem Script functions block
+rem
 goto :eof
 :invokeVisualStudioIfRequired
 setlocal
+    set "Loc_Answer=No"
     echo. & echo in %0 & echo args: %*
     for %%A in (%*) do (
-
         echo token: %%A
-        set Loc_Test=%%A
-        echo Loc_Test=%Loc_Test%
-        set Loc_Result=%Loc_Test:~-4%
-        echo Loc_Result=%Loc_Result%
-
-        if /i "%Loc_Result%"==".sln" (
+        if /i "%%~xA"==".sln" (
             echo "%Package_VisualStudioDir%\Common7\IDE\devenv.exe" "%%A"
-            goto :eof
+            set "Loc_Answer=Yes"
+            goto :locEnd
         )
     )
-endlocal & echo exiting %0 & echo. & exit /b %errorlevel%
+:locEnd
+endlocal & echo exiting %0 & echo. & set "Answer=%Loc_Answer%" & exit /b %errorlevel%
 
 goto :eof
 :invokeCMakeIfRequired
 setlocal
+    set "Loc_Answer=No"
     echo. & echo in %0 & echo args: %*
     for %%A in (%*) do (
         echo token: %%A
-        if /i "%%A"=="cmake" (
+        if /i "%%A"=="cmake" ( 
+            set "Loc_Answer=Yes"
             echo cd "%Package_BinDir%"
             echo "%Package_CMake%" -G "%Package_CMake_Generator%" "%Package_SrcDir%"
-            goto :eof
+            goto :locEnd
         )
     )
-endlocal & echo exiting %0 & echo. & exit /b %errorlevel%
+:locEnd
+endlocal & echo exiting %0 & echo. & set "Answer=%Loc_Answer%" & exit /b %errorlevel%
 
 goto :eof
 :invokeCMakeGuiIfRequired
 setlocal
+    set "Loc_Answer=No"
     echo. & echo in %0 & echo args: %*
     for %%A in (%*) do (
         echo token: %%A
         if /i "%%A"=="cmake-gui" (
+            set "Loc_Answer=Yes"
             echo cd "%Package_BinDir%"
             echo "%Package_CMakeGui%" "%Package_SrcDir%"
-            goto :eof
+            goto :locEnd
         )
     )
-endlocal & echo exiting %0 & echo. & exit /b %errorlevel%
-
+:locEnd
+endlocal & echo exiting %0 & echo. & set "Answer=%Loc_Answer%" & exit /b %errorlevel%
 
 endlocal
