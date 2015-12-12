@@ -91,6 +91,7 @@ if errorlevel 1 start "Error!" echo Error %errorlevel% occurred in %0
 rem
 rem Script functions block
 rem
+
 goto :eof
 :invokeVisualStudioIfRequired
 setlocal
@@ -118,7 +119,8 @@ setlocal
             set "Loc_Answer=Yes"
             echo if not exist "%Package_BinDir%" md "%Package_BinDir%"
             echo cd "%Package_BinDir%"
-            echo "%Package_CMake%" -G "%Package_CMake_Generator%" "%Package_SrcDir%"
+            echo call "%Package_VcVarsAll%" %Package_VcVarsAllArgs%
+            echo "%Package_CMake%" -G "%Package_CMake_Generator%" -DCMAKE_BUILD_TYPE=%Package_Configuration% "%Package_SrcDir%"
             goto :locEnd
         )
     )
@@ -135,8 +137,16 @@ setlocal
         if /i "%%A"=="cmake-gui" (
             set "Loc_Answer=Yes"
             echo if not exist "%Package_BinDir%" md "%Package_BinDir%"
-            echo cd "%Package_BinDir%"
+            if not exist "%Package_BinDir%" md "%Package_BinDir%"
+            if errorlevel 1 goto :locEnd
+            echo cd /d "%Package_BinDir%"
+            cd /d "%Package_BinDir%"
+            if errorlevel 1 goto :locEnd
+            echo call "%Package_VcVarsAll%" %Package_VcVarsAllArgs%
+            call "%Package_VcVarsAll%" %Package_VcVarsAllArgs%
+            if errorlevel 1 goto :locEnd
             echo "%Package_CMakeGui%" "%Package_SrcDir%"
+            "%Package_CMakeGui%" "%Package_SrcDir%"
             goto :locEnd
         )
     )

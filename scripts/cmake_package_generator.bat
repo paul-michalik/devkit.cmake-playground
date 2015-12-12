@@ -19,24 +19,23 @@ rem
 rem Visual Studio:
 rem
 if "%Loc_Toolset%"=="v100" (
-    set "Loc_VisualStudioDir=%CommonProgramFiles(x86)%\Microsoft Visual Studio 10.0\VC\vcvarsall.bat"
+    set "Loc_VisualStudioDir=%ProgramFiles(x86)%\Microsoft Visual Studio 10.0"
 )
 
 if "%Loc_Toolset%"=="v110" (
-    set "Loc_VisualStudioDir=%CommonProgramFiles(x86)%\Microsoft Visual Studio 12.0\VC\vcvarsall.bat"
+    set "Loc_VisualStudioDir=%ProgramFiles(x86)%\Microsoft Visual Studio 11.0"
 )
 
 if "%Loc_Toolset%"=="v120" (
-    set "Loc_VisualStudioDir=%CommonProgramFiles(x86)%\Microsoft Visual Studio 13.0\VC\vcvarsall.bat"
+    set "Loc_VisualStudioDir=%ProgramFiles(x86)%\Microsoft Visual Studio 12.0"
 )
 
 if "%Loc_Toolset%"=="v140" (
-    set "Loc_VisualStudioDir=%CommonProgramFiles(x86)%\Microsoft Visual Studio 15.0\VC\vcvarsall.bat"
+    set "Loc_VisualStudioDir=%ProgramFiles(x86)%\Microsoft Visual Studio 14.0"
 )
 
 
 set "Loc_VcVarsAll=%Loc_VisualStudioDir%\VC\vcvarsall.bat"
-
 
 if "%Loc_Generator%"=="msbuild" (
     rem
@@ -58,22 +57,38 @@ if "%Loc_Generator%"=="msbuild" (
         set "Loc_CMake_Generator=Visual Studio 14 2015"
     )
 
-    rem
-    rem Platform
-    rem
-    if "%Loc_Platform%"=="win32" (
+    if "%Loc_Platform%"=="x86" (
         set "Loc_CMake_GeneratorArgs="
     )
 
-    if "%Loc_Platform%"=="win64" (
+    if "%Loc_Platform%"=="x64" (
         set "Loc_CMake_GeneratorArgs=Win64"
     )
 )
 
+if "%Loc_Generator%"=="nmake" (
+    if "%Loc_Toolset%"=="v110" (
+        set "Loc_CMake_Generator=NMake Makefiles"
+    )
+
+    if "%Loc_Toolset%"=="v120" (
+        set "Loc_CMake_Generator=NMake Makefiles"
+    )
+
+    if "%Loc_Toolset%"=="v140" (
+        set "Loc_CMake_Generator=NMake Makefiles"
+    )
+
+    if "%Loc_Platform%"=="x64" (
+        set "Loc_VcVarsAllArgs=amd64"
+    )
+
+    if "%Loc_Platform%"=="x86" (
+        set "Loc_VcVarsAllArgs=x86"
+    )
+)
+
 if "%Loc_Generator%"=="jom" (
-    rem
-    rem Generator
-    rem
     if "%Loc_Toolset%"=="v110" (
         set "Loc_CMake_Generator=NMake Makefiles JOM"
     )
@@ -86,14 +101,11 @@ if "%Loc_Generator%"=="jom" (
         set "Loc_CMake_Generator=NMake Makefiles JOM"
     )
 
-    rem
-    rem Platform
-    rem
-    if "%Loc_Platform%"=="win64" (
+    if "%Loc_Platform%"=="x64" (
         set "Loc_VcVarsAllArgs=amd64"
     )
 
-    if "%Loc_Platform%"=="win32" (
+    if "%Loc_Platform%"=="x86" (
         set "Loc_VcVarsAllArgs=x86"
     )
 )
