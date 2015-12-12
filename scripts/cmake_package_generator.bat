@@ -40,7 +40,7 @@ set "Loc_VcVarsAll=%Loc_VisualStudioDir%\VC\vcvarsall.bat"
 
 if "%Loc_Generator%"=="msbuild" (
     rem
-    rem Generator
+    rem Generator:
     rem
     if "%Loc_Toolset%"=="v100" (
         set "Loc_CMake_Generator=Visual Studio 10 2010"
