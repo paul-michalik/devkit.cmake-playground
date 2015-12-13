@@ -10,12 +10,11 @@ rem Package_Platform: x86|x64
 rem Package_Toolset: v100|v110|v120|v140
 rem
 
-setlocal
 set "Package_RootDir=%~dp0.."
 
 echo. & echo Args: %* & echo.
 
-set "Package_ConfigID=%~1"
+set "Package_ConfigString=%~1"
 set "Package_Name="
 set "Package_Generator="
 set "Package_Platform="
@@ -28,14 +27,12 @@ rem
 set "Package_CMakeInstallDir=%ProgramFiles(x86)%\CMake"
 set "Package_CMake=%Package_CMakeInstallDir%\bin\cmake.exe"
 set "Package_CMakeGui=%Package_CMakeInstallDir%\bin\cmake-gui.exe"
-if not exist %Package_CMake% start "Error!" echo %Package_CMake% does not exist!
-if not exist %Package_CMakeGui% start "Error!" echo %Package_CMakeGui% does not exist!
 
 rem 
 rem Parse parameters:
 rem
-echo calling call "%Package_RootDir%\scripts\parse_params.bat" "%Package_ConfigID%"
-call "%Package_RootDir%\scripts\parse_params.bat" "%Package_ConfigID%"
+echo calling call "%Package_RootDir%\scripts\parse_params.bat" "%Package_ConfigString%"
+call "%Package_RootDir%\scripts\parse_params.bat" "%Package_ConfigString%"
 
 rem
 rem Configure CMake environment:
@@ -48,10 +45,11 @@ set "Package_VcVarsAll="
 set "Package_VcVarsAllArgs="
 echo calling call "%Package_RootDir%\scripts\cmake_package_generator.bat" "%Package_Generator%" "%Package_Platform%" "%Package_Toolset%"
 call "%Package_RootDir%\scripts\cmake_package_generator.bat" "%Package_Generator%" "%Package_Platform%" "%Package_Toolset%"
+if errorlevel 1 start "Error!" echo Error %errorlevel% occurred in %0 
  
- rem
- rem Package source and build directories:
- rem
+rem
+rem Package source and build directories:
+rem
 set "Package_SrcDir=%Package_RootDir%\src\%Package_Name%"
 set "Package_BinDir=%Package_RootDir%\build\%Package_Name%.%Package_Generator%.%Package_Platform%.%Package_Toolset%
 
@@ -65,32 +63,88 @@ if /i not "%Package_Configuration%"=="" (
 set Package_
 
 rem
+rem Should we invoke error?
+rem
+set "Loc_Answer=No"
+call :invokeErrorIfProgramsAreMissing %*
+if errorlevel 1 echo Error %errorlevel% occurred in %0 & cmd /k exit /b %errorlevel%
+if /i "%Loc_Answer%"=="Yes" goto :eof
+
+rem
 rem Should we invoke cmake-gui?
 rem
 set "Loc_Answer=No"
 call :invokeCMakeGuiIfRequired %*
+if errorlevel 1 echo Error %errorlevel% occurred in %0 & cmd /k exit /b %errorlevel%
 if /i "%Loc_Answer%"=="Yes" goto :eof
-if errorlevel 1 start "Error!" echo Error %errorlevel% occurred in %0 
 
 rem
 rem Should we invoke cmake?
 rem
 set "Loc_Answer=No"
 call :invokeCMakeIfRequired %*
+if errorlevel 1 echo Error %errorlevel% occurred in %0 & cmd /k exit /b %errorlevel%
 if /i "%Loc_Answer%"=="Yes" goto :eof
-if errorlevel 1 start "Error!" echo Error %errorlevel% occurred in %0 
 
 rem
 rem Should we invoke Visual Studio?
 rem
 set "Loc_Answer=No"
 call :invokeVisualStudioIfRequired %*
+if errorlevel 1 echo Error %errorlevel% occurred in %0 & cmd /k exit /b %errorlevel%
 if /i "%Loc_Answer%"=="Yes" goto :eof
-if errorlevel 1 start "Error!" echo Error %errorlevel% occurred in %0 
+
+rem
+rem OK, no specific option given, invoke interactive shell:
+rem
+echo invoking: "%Package_VcVarsAll%" %Package_VcVarsAllArgs%
+call "%Package_VcVarsAll%" %Package_VcVarsAllArgs%
+if errorlevel 1 echo Error %errorlevel% occurred in %0 & cmd /k exit /b %errorlevel%
+start "%Package_ConfigString%" cmd /k echo Environment for "%Package_ConfigString%" is ready. Invoke cmake, cmake-gui, msbuild or devenev.exe at will.
 
 rem
 rem Script functions block
 rem
+
+goto :eof
+:invokeErrorIfProgramsAreMissing
+setlocal
+    set "Loc_Answer=No"
+    echo. & echo in %0 & echo args: %*
+
+    echo if not exist "%Package_VisualStudioDir%" ...
+    if not exist "%Package_VisualStudioDir%" (
+        set "Loc_Answer=Yes"
+        echo "error: %Package_VisualStudioDir%"
+        cmd /c exit /b 1
+        goto :locEnd
+    )
+
+    echo if not exist "%Package_VcVarsAll%" ...
+    if not exist "%Package_VcVarsAll%" (
+        set "Loc_Answer=Yes"
+        echo "error: %Package_VcVarsAll%"
+        cmd /c exit /b 2
+        goto :locEnd
+    )
+
+    echo if not exist "%Package_CMake%" ...
+    if not exist "%Package_CMake%" (
+        set "Loc_Answer=Yes"
+        echo "error: %Package_CMake% does not exist!"
+        cmd /c exit /b 3
+        goto :locEnd
+    )
+
+    echo if not exist "%Package_CMakeGui%" ...
+    if not exist "%Package_CMakeGui%" (
+        set "Loc_Answer=Yes"
+        echo "error: %Package_CMakeGui% does not exist!"
+        cmd /c exit /b 4
+        goto :locEnd
+    )
+:locEnd
+endlocal & echo exiting %0 & echo. & set "Loc_Answer=%Loc_Answer%" & exit /b %errorlevel%
 
 goto :eof
 :invokeVisualStudioIfRequired
@@ -117,10 +171,13 @@ setlocal
         echo token: %%A
         if /i "%%A"=="cmake" ( 
             set "Loc_Answer=Yes"
-            echo if not exist "%Package_BinDir%" md "%Package_BinDir%"
-            echo cd "%Package_BinDir%"
-            echo call "%Package_VcVarsAll%" %Package_VcVarsAllArgs%
-            echo "%Package_CMake%" -G "%Package_CMake_Generator%" -DCMAKE_BUILD_TYPE=%Package_Configuration% "%Package_SrcDir%"
+            if not exist "%Package_BinDir%" md "%Package_BinDir%"
+            if errorlevel 1 goto :locEnd
+            cd "%Package_BinDir%"
+            if errorlevel 1 goto :locEnd
+            call "%Package_VcVarsAll%" %Package_VcVarsAllArgs%
+            if errorlevel 1 goto :locEnd
+            start "%Package_ConfigString%" /d "%Package_BinDir%" cmd /k call "%Package_CMake%" -G "%Package_CMake_Generator%" -DCMAKE_BUILD_TYPE=%Package_Configuration% "%Package_SrcDir%"
             goto :locEnd
         )
     )
@@ -136,21 +193,16 @@ setlocal
         echo token: %%A
         if /i "%%A"=="cmake-gui" (
             set "Loc_Answer=Yes"
-            echo if not exist "%Package_BinDir%" md "%Package_BinDir%"
             if not exist "%Package_BinDir%" md "%Package_BinDir%"
             if errorlevel 1 goto :locEnd
-            echo cd /d "%Package_BinDir%"
-            cd /d "%Package_BinDir%"
+            cd "%Package_BinDir%"
             if errorlevel 1 goto :locEnd
-            echo call "%Package_VcVarsAll%" %Package_VcVarsAllArgs%
             call "%Package_VcVarsAll%" %Package_VcVarsAllArgs%
             if errorlevel 1 goto :locEnd
-            echo "%Package_CMakeGui%" "%Package_SrcDir%"
-            "%Package_CMakeGui%" "%Package_SrcDir%"
+            if not exist "%Package_BinDir%\CMakeCache.txt" echo Warning: You should consider running CMake first, we cannot detect "%Package_BinDir%\CMakeCache.txt"!
+            start "%Package_ConfigString%" /d "%Package_BinDir%" cmd /k call "%Package_CMakeGui%" "%Package_SrcDir%"
             goto :locEnd
         )
     )
 :locEnd
 endlocal & echo exiting %0 & echo. & set "Loc_Answer=%Loc_Answer%" & exit /b %errorlevel%
-
-endlocal

@@ -1,8 +1,8 @@
-cmake_minimum_required(3.0)
+cmake_minimum_required(VERSION 3.0)
 
 project(wobble 
 	VERSION 0.0.1 
-	LANGUAGES C CXX Fortran)
+	LANGUAGES C CXX) #Add languages as required...
 	
 add_subdirectory(core)
 

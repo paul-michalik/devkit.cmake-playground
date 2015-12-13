@@ -9,10 +9,10 @@ setlocal
 set "Loc_Generator=%~1"
 set "Loc_Platform=%~2"
 set "Loc_Toolset=%~3"
-set "Loc_CMake_Generator="
+set "Loc_CMake_Generator=The ID string "%Loc_Generator%.%Loc_Platform%.%Loc_Toolset%" does not yield a supported CMake generator."
 set "Loc_CMake_GeneratorArgs="
-set "Loc_VisualStudioDir="
-set "Loc_VcVarsAll="
+set "Loc_VisualStudioDir=The ID string "%Loc_Generator%.%Loc_Platform%.%Loc_Toolset%" does not yield a supported Visual Studio version"
+set "Loc_VcVarsAll=The ID string "%Loc_Generator%.%Loc_Platform%.%Loc_Toolset%" does not yield a supported Visual Studio version"
 set "Loc_VcVarsAllArgs="
 
 rem
@@ -66,18 +66,11 @@ if "%Loc_Generator%"=="msbuild" (
     )
 )
 
+rem Compose (=> DelayedExpansion)
+set "Loc_CMake_Generator=%Loc_CMake_Generator% %Loc_CMake_GeneratorArgs%"
+
 if "%Loc_Generator%"=="nmake" (
-    if "%Loc_Toolset%"=="v110" (
-        set "Loc_CMake_Generator=NMake Makefiles"
-    )
-
-    if "%Loc_Toolset%"=="v120" (
-        set "Loc_CMake_Generator=NMake Makefiles"
-    )
-
-    if "%Loc_Toolset%"=="v140" (
-        set "Loc_CMake_Generator=NMake Makefiles"
-    )
+    set "Loc_CMake_Generator=NMake Makefiles"
 
     if "%Loc_Platform%"=="x64" (
         set "Loc_VcVarsAllArgs=amd64"
@@ -89,17 +82,7 @@ if "%Loc_Generator%"=="nmake" (
 )
 
 if "%Loc_Generator%"=="jom" (
-    if "%Loc_Toolset%"=="v110" (
-        set "Loc_CMake_Generator=NMake Makefiles JOM"
-    )
-
-    if "%Loc_Toolset%"=="v120" (
-        set "Loc_CMake_Generator=NMake Makefiles JOM"
-    )
-
-    if "%Loc_Toolset%"=="v140" (
-        set "Loc_CMake_Generator=NMake Makefiles JOM"
-    )
+    set "Loc_CMake_Generator=NMake Makefiles JOM"
 
     if "%Loc_Platform%"=="x64" (
         set "Loc_VcVarsAllArgs=amd64"
@@ -109,8 +92,6 @@ if "%Loc_Generator%"=="jom" (
         set "Loc_VcVarsAllArgs=x86"
     )
 )
-
-rem set "Loc_CMake_Generator=%Loc_CMake_Generator% %Loc_CMake_GeneratorArgs%"
 
 echo. & echo Locals in %0 
 set Loc_
