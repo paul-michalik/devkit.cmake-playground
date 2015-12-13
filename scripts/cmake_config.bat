@@ -67,7 +67,7 @@ rem Should we invoke error?
 rem
 set "Loc_Answer=No"
 call :invokeErrorIfProgramsAreMissing %*
-if errorlevel 1 echo Error %errorlevel% occurred in %0 & cmd /k exit /b %errorlevel%
+if errorlevel 1 cmd /k echo Error %errorlevel% occurred in %0 & exit /b %errorlevel% & goto :eof
 if /i "%Loc_Answer%"=="Yes" goto :eof
 
 rem
@@ -75,7 +75,7 @@ rem Should we invoke cmake-gui?
 rem
 set "Loc_Answer=No"
 call :invokeCMakeGuiIfRequired %*
-if errorlevel 1 echo Error %errorlevel% occurred in %0 & cmd /k exit /b %errorlevel%
+if errorlevel 1 cmd /k echo Error %errorlevel% occurred in %0 & exit /b %errorlevel% & goto :eof
 if /i "%Loc_Answer%"=="Yes" goto :eof
 
 rem
@@ -83,7 +83,7 @@ rem Should we invoke cmake?
 rem
 set "Loc_Answer=No"
 call :invokeCMakeIfRequired %*
-if errorlevel 1 echo Error %errorlevel% occurred in %0 & cmd /k exit /b %errorlevel%
+if errorlevel 1 cmd /k echo Error %errorlevel% occurred in %0 & exit /b %errorlevel% & goto :eof
 if /i "%Loc_Answer%"=="Yes" goto :eof
 
 rem
@@ -91,20 +91,32 @@ rem Should we invoke Visual Studio?
 rem
 set "Loc_Answer=No"
 call :invokeVisualStudioIfRequired %*
-if errorlevel 1 echo Error %errorlevel% occurred in %0 & cmd /k exit /b %errorlevel%
+if errorlevel 1 cmd /k echo Error %errorlevel% occurred in %0 & exit /b %errorlevel% & goto :eof
 if /i "%Loc_Answer%"=="Yes" goto :eof
 
 rem
 rem OK, no specific option given, invoke interactive shell:
 rem
-echo invoking: "%Package_VcVarsAll%" %Package_VcVarsAllArgs%
-call "%Package_VcVarsAll%" %Package_VcVarsAllArgs%
-if errorlevel 1 echo Error %errorlevel% occurred in %0 & cmd /k exit /b %errorlevel%
-start "%Package_ConfigString%" cmd /k echo Environment for "%Package_ConfigString%" is ready. Invoke cmake, cmake-gui, msbuild or devenev.exe at will.
+call :invokeInteractiveShell
 
 rem
 rem Script functions block
 rem
+
+goto :eof
+:invokeInteractiveShell
+    if not exist "%Package_BinDir%" md "%Package_BinDir%"
+    if errorlevel 1 goto :locEnd
+    cd "%Package_BinDir%"
+    if errorlevel 1 goto :locEnd
+    call "%Package_VcVarsAll%" %Package_VcVarsAllArgs%
+    if errorlevel 1 goto :locEnd
+    start "%Package_ConfigString%" cmd /k echo Environment for "%Package_ConfigString%" is ready. Invoke cmake, cmake-gui, msbuild or devenev.exe at will.
+    goto :locEnd
+:locEnd
+setlocal
+
+endlocal
 
 goto :eof
 :invokeErrorIfProgramsAreMissing
